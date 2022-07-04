@@ -18,32 +18,47 @@ export default class App extends React.Component {
     const resultado = this.state.peso / (this.state.altura * this.state.altura);
 
     this.setState({
-      imc: Math.ceil(resultado)
+      imc: resultado.toFixed(2)
     });
-    if(resultado < 18.5) {
+    if(resultado < 16) {
       this.setState({
-        diagnostico: 'Magreza',
-        cor: '#f1c40f'
+        diagnostico: 'Magreza (grave)',
+        cor: '#A0522D'
+      });
+    }else if (resultado >= 16 && resultado < 17) {
+      this.setState({
+        diagnostico: 'Magreza (moderada)',
+        cor: '#CD853F'
+      });
+    }else if (resultado >= 17 && resultado < 18.5) {
+      this.setState({
+        diagnostico: 'Magreza (leve)',
+        cor: '#F4A460'
       });
     } else if (resultado >= 18.5 && resultado < 25) {
       this.setState({
-        diagnostico: 'Normal',
-        cor: '#1abc9c'
+        diagnostico: 'Saudável',
+        cor: '#32CD32'
       });
     } else if (resultado >= 25 && resultado < 30) {
       this.setState({
         diagnostico: 'Sobrepeso',
-        cor: '#e67e22'
+        cor: '#FF7F50'
       });
-    } else if (resultado >= 30 && resultado < 40) {
+    } else if (resultado >= 30 && resultado < 35) {
       this.setState({
-        diagnostico: 'Obesidade',
-        cor: '#d35400'
+        diagnostico: 'Obesidade Grau I',
+        cor: '#FF6347'
       });
-    } else if (resultado >= 40) {
+    }else if (resultado >= 35 && resultado < 40) {
       this.setState({
-        diagnostico: 'Obesidade Mórbida',
-        cor: '#c0392b'
+        diagnostico: 'Obesidade Grau II (severa)',
+        cor: '#FF6347'
+      });
+    }else if (resultado >= 40) {
+      this.setState({
+        diagnostico: 'Obesidade Grau III (mórbida)',
+        cor: '#FF0000'
       });
     }
   }
@@ -62,25 +77,27 @@ export default class App extends React.Component {
 
         <View>
 
-          <TextInput
-           style={styles.peso}
-           label='Peso'
-           onChangeText={ valor => {
-             this.setState({peso: valor.replace(',', '.')});
-           }}
-          />
+            <TextInput
+              style={styles.peso}
+              label='Digite seu peso (,)'
+              onChangeText={ valor => {
+              this.setState({peso: valor.replace(',', '.')});
+            }}
+              keyboardType='numeric'
+            />
 
-          <TextInput
-           style={styles.altura} 
-           label='Altura'
-           onChangeText={valor => {
-             this.setState({altura: valor.replace(',', '.')});
-           }}
-          />
+            <TextInput
+              style={styles.altura} 
+              label='Digite sua altura (,)'
+              onChangeText={valor => {
+              this.setState({altura: valor.replace(',', '.')});
+            }}
+              keyboardType='numeric'
+            />
 
-          <Button mode='contained' onPress={this.calcularIMC}>
-            Calcular seu IMC
-          </Button>
+            <Button mode='contained' onPress={this.calcularIMC}>
+              Calcular seu IMC
+            </Button>
 
         </View>
        </View>
